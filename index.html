@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Tiệm Bánh</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Login Page -->
+    <div id="login-page">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-5">
+            <div class="login-form">
+              <div class="text-center mb-4">
+                <i class="bi bi-cake2 display-1 text-primary"></i>
+                <h2 class="mt-3">Đăng Nhập Hệ Thống</h2>
+                <p class="text-muted">Quản lý tiệm bánh của bạn</p>
+              </div>
+              <div id="login-error" class="alert alert-danger d-none" role="alert">
+                Tên đăng nhập hoặc mật khẩu không đúng!
+              </div>
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="username" class="form-label">Tên đăng nhập</label>
+                  <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Mật khẩu</label>
+                  <input type="password" class="form-control" id="password" required>
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember-me">
+                    <label class="form-check-label" for="remember-me">
+                      Ghi nhớ đăng nhập
+                    </label>
+                  </div>
+                  <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Đăng Nhập</button>
+                <div class="text-center mt-3 text-muted">
+                  <small>Tài khoản demo: admin / password</small>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard-container" class="d-none">
+      <!-- Sidebar Toggle Button (Mobile) -->
+      <button id="sidebar-toggle" class="btn btn-light d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1000">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <!-- Sidebar -->
+      <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <h3>Quản Lý Tiệm Bánh</h3>
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" data-page="dashboard">
+              <i class="bi bi-graph-up"></i> Tổng Quan
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="products">
+              <i class="bi bi-cake2"></i> Sản Phẩm
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="orders">
+              <i class="bi bi-bag"></i> Đơn Hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="staff">
+              <i class="bi bi-people"></i> Nhân Viên
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="customers">
+              <i class="bi bi-person"></i> Khách Hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="reports">
+              <i class="bi bi-file-earmark-text"></i> Báo Cáo
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-page="settings">
+              <i class="bi bi-gear"></i> Cài Đặt
+            </a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <button id="logout-btn" class="btn btn-outline-danger w-100">
+            <i class="bi bi-box-arrow-right"></i> Đăng Xuất
+          </button>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main id="content">
+        <!-- Header -->
+        <header class="content-header">
+          <h1 id="page-title">Tổng Quan</h1>
+          <div class="user-menu">
+            <div class="notifications">
+              <i class="bi bi-bell"></i>
+              <span class="badge bg-danger">3</span>
+            </div>
+            <div class="user-info">
+              <div class="user-avatar">QT</div>
+              <span>Quản Trị Viên</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Page Content -->
+        <div id="page-content">
+          <!-- Dashboard Page -->
+          <div id="dashboard-page" class="page-content">
+            <div class="row mb-4">
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Tổng Doanh Thu</p>
+                    <h2 class="stat-card-value">8.459.000₫</h2>
+                    <p class="stat-card-change positive">+12.5% so với tuần trước</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Đơn Hàng</p>
+                    <h2 class="stat-card-value">245</h2>
+                    <p class="stat-card-change positive">+18.2% so với tuần trước</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Khách Hàng</p>
+                    <h2 class="stat-card-value">1.250</h2>
+                    <p class="stat-card-change positive">+5.1% so với tuần trước</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Đơn Hàng TB</p>
+                    <h2 class="stat-card-value">34.500₫</h2>
+                    <p class="stat-card-change negative">-2.4% so với tuần trước</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-lg-6 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Tổng Quan Doanh Thu</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="revenue-chart">
+                      <div class="revenue-item">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Thứ Hai</span>
+                          <span>1.245.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 70%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Thứ Ba</span>
+                          <span>1.400.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Thứ Tư</span>
+                          <span>1.150.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 65%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Thứ Năm</span>
+                          <span>1.500.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Sản Phẩm Phổ Biến</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="popular-products">
+                      <div class="product-item d-flex align-items-center mb-3">
+                        <div class="product-icon">
+                          <i class="bi bi-cake2"></i>
+                        </div>
+                        <div class="product-info flex-grow-1">
+                          <h6 class="mb-0">Bánh Kem Socola</h6>
+                          <small class="text-muted">245 đơn hàng</small>
+                        </div>
+                        <div class="product-price text-primary">45.000₫</div>
+                      </div>
+                      <div class="product-item d-flex align-items-center mb-3">
+                        <div class="product-icon">
+                          <i class="bi bi-cake2"></i>
+                        </div>
+                        <div class="product-info flex-grow-1">
+                          <h6 class="mb-0">Bánh Cupcake Vanilla</h6>
+                          <small class="text-muted">198 đơn hàng</small>
+                        </div>
+                        <div class="product-price text-primary">42.000₫</div>
+                      </div>
+                      <div class="product-item d-flex align-items-center mb-3">
+                        <div class="product-icon">
+                          <i class="bi bi-cake2"></i>
+                        </div>
+                        <div class="product-info flex-grow-1">
+                          <h6 class="mb-0">Bánh Tiramisu</h6>
+                          <small class="text-muted">154 đơn hàng</small>
+                        </div>
+                        <div class="product-price text-primary">35.000₫</div>
+                      </div>
+                      <div class="product-item d-flex align-items-center">
+                        <div class="product-icon">
+                          <i class="bi bi-cake2"></i>
+                        </div>
+                        <div class="product-info flex-grow-1">
+                          <h6 class="mb-0">Bánh Croissant</h6>
+                          <small class="text-muted">132 đơn hàng</small>
+                        </div>
+                        <div class="product-price text-primary">47.000₫</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">Đơn Hàng Gần Đây</h5>
+                <a href="#" class="btn btn-sm btn-link">Xem tất cả</a>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Mã Đơn</th>
+                        <th>Khách Hàng</th>
+                        <th>Ngày</th>
+                        <th>Số Tiền</th>
+                        <th>Trạng Thái</th>
+                        <th>Thao Tác</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>#ĐH-001</td>
+                        <td>Nguyễn Văn A</td>
+                        <td>22/03/2025</td>
+                        <td>245.000₫</td>
+                        <td><span class="badge bg-success">Hoàn Thành</span></td>
+                        <td><button class="btn btn-sm btn-primary">Chi tiết</button></td>
+                      </tr>
+                      <tr>
+                        <td>#ĐH-002</td>
+                        <td>Trần Thị B</td>
+                        <td>22/03/2025</td>
+                        <td>187.000₫</td>
+                        <td><span class="badge bg-warning text-dark">Đang Xử Lý</span></td>
+                        <td><button class="btn btn-sm btn-primary">Chi tiết</button></td>
+                      </tr>
+                      <tr>
+                        <td>#ĐH-003</td>
+                        <td>Lê Văn C</td>
+                        <td>21/03/2025</td>
+                        <td>320.000₫</td>
+                        <td><span class="badge bg-success">Hoàn Thành</span></td>
+                        <td><button class="btn btn-sm btn-primary">Chi tiết</button></td>
+                      </tr>
+                      <tr>
+                        <td>#ĐH-004</td>
+                        <td>Phạm Thị D</td>
+                        <td>21/03/2025</td>
+                        <td>122.000₫</td>
+                        <td><span class="badge bg-danger">Đã Hủy</span></td>
+                        <td><button class="btn btn-sm btn-primary">Chi tiết</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Products Page -->
+          <div id="products-page" class="page-content d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Quản Lý Sản Phẩm</h2>
+              <button id="add-product-btn" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Thêm Sản Phẩm Mới
+              </button>
+            </div>
+
+            <!-- Product Form (Add/Edit) -->
+            <div id="product-form-container" class="card mb-4 d-none">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 id="product-form-title">Thêm Sản Phẩm Mới</h5>
+                <button id="close-product-form" class="btn-close"></button>
+              </div>
+              <div class="card-body">
+                <form id="product-form">
+                  <input type="hidden" id="product-id">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="product-name" class="form-label">Tên Sản Phẩm</label>
+                      <input type="text" class="form-control" id="product-name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="product-category" class="form-label">Danh Mục</label>
+                      <select class="form-select" id="product-category">
+                        <option>Bánh Kem</option>
+                        <option>Bánh Ngọt</option>
+                        <option>Bánh Mì</option>
+                        <option>Cookies</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="product-price" class="form-label">Giá (VNĐ)</label>
+                      <input type="text" class="form-control" id="product-price" placeholder="VD: 45.000₫" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="product-stock" class="form-label">Số Lượng Tồn Kho</label>
+                      <input type="number" class="form-control" id="product-stock" min="0" required>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" id="cancel-product-form" class="btn btn-secondary">Hủy Bỏ</button>
+                    <button type="submit" class="btn btn-primary">Lưu Sản Phẩm</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-white p-3">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                    </div>
+                  </div>
+                  <div class="col-md-8 d-flex justify-content-md-end">
+                    <select class="form-select me-2" style="max-width: 200px;">
+                      <option>Tất Cả Danh Mục</option>
+                      <option>Bánh Kem</option>
+                      <option>Bánh Ngọt</option>
+                      <option>Bánh Mì</option>
+                      <option>Cookies</option>
+                    </select>
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Sắp xếp: Tên</option>
+                      <option>Sắp xếp: Giá (Thấp đến Cao)</option>
+                      <option>Sắp xếp: Giá (Cao đến Thấp)</option>
+                      <option>Sắp xếp: Tồn Kho</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover product-table">
+                    <thead>
+                      <tr>
+                        <th>Sản Phẩm</th>
+                        <th>Danh Mục</th>
+                        <th>Giá</th>
+                        <th>Tồn Kho</th>
+                        <th>Trạng Thái</th>
+                        <th class="text-end">Thao Tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                      <!-- Products will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>Hiển thị <span class="fw-bold">1</span> đến <span class="fw-bold">8</span> của <span class="fw-bold">8</span> kết quả</div>
+                  <nav>
+                    <ul class="pagination mb-0">
+                      <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Orders Page -->
+          <div id="orders-page" class="page-content d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Quản Lý Đơn Hàng</h2>
+              <div>
+                <button class="btn btn-outline-primary me-2">
+                  <i class="bi bi-file-earmark-arrow-down"></i> Xuất Đơn Hàng
+                </button>
+                <button id="create-order-btn" class="btn btn-primary">
+                  <i class="bi bi-plus-lg"></i> Tạo Đơn Hàng
+                </button>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-primary border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Tổng Đơn Hàng</div>
+                    <div class="fs-4 fw-bold">245</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-success border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Hoàn Thành</div>
+                    <div class="fs-4 fw-bold">189</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-warning border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Đang Xử Lý</div>
+                    <div class="fs-4 fw-bold">42</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-danger border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Đã Hủy</div>
+                    <div class="fs-4 fw-bold">14</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Create Order Modal -->
+            <div class="modal fade" id="createOrderModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Tạo Đơn Hàng Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="create-order-form" class="create-order-form">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <div class="mb-3">
+                            <label for="order-customer" class="form-label">Khách Hàng</label>
+                            <select class="form-select" id="order-customer" required>
+                              <option value="">Chọn khách hàng...</option>
+                              <!-- Customers will be loaded here by JavaScript -->
+                            </select>
+                          </div>
+                          
+                          <div class="mb-3">
+                            <label class="form-label">Sản Phẩm</label>
+                            <div class="product-list">
+                              <!-- Products will be loaded here by JavaScript -->
+                            </div>
+                          </div>
+                          
+                          <div class="mb-3">
+                            <label for="order-note" class="form-label">Ghi Chú</label>
+                            <textarea class="form-control" id="order-note" rows="3" placeholder="Ghi chú về đơn hàng..."></textarea>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <div class="order-summary">
+                            <h6 class="mb-3">Tổng Quan Đơn Hàng</h6>
+                            
+                            <div class="order-summary-item">
+                              <span>Tổng sản phẩm:</span>
+                              <span id="order-total-items">0</span>
+                            </div>
+                            
+                            <div class="order-summary-item">
+                              <span>Tạm tính:</span>
+                              <span id="order-subtotal">0₫</span>
+                            </div>
+                            
+                            <div class="order-summary-item">
+                              <span>Thuế (10%):</span>
+                              <span id="order-tax">0₫</span>
+                            </div>
+                            
+                            <div class="order-summary-item order-total">
+                              <span>Tổng cộng:</span>
+                              <span id="order-total">0₫</span>
+                            </div>
+                            
+                            <div class="mt-3">
+                              <label for="order-payment" class="form-label">Phương Thức Thanh Toán</label>
+                              <select class="form-select" id="order-payment" required>
+                                <option value="Tiền Mặt">Tiền Mặt</option>
+                                <option value="Thẻ Tín Dụng/Ghi Nợ">Thẻ Tín Dụng/Ghi Nợ</option>
+                                <option value="Ví MoMo">Ví MoMo</option>
+                                <option value="ZaloPay">ZaloPay</option>
+                              </select>
+                            </div>
+                            
+                            <div class="mt-3">
+                              <label for="order-status" class="form-label">Trạng Thái</label>
+                              <select class="form-select" id="order-status" required>
+                                <option value="Đang Xử Lý">Đang Xử Lý</option>
+                                <option value="Hoàn Thành">Hoàn Thành</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy Bỏ</button>
+                    <button type="button" class="btn btn-primary" id="save-order-btn">Tạo Đơn Hàng</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Detail Modal -->
+            <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Chi Tiết Đơn Hàng #<span id="order-detail-id"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row mb-4">
+                      <div class="col-md-6">
+                        <h6 class="mb-2">Thông Tin Đơn Hàng</h6>
+                        <div class="bg-light p-3 rounded">
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Mã Đơn Hàng:</div>
+                            <div class="col-7" id="order-detail-code"></div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Ngày Đặt:</div>
+                            <div class="col-7" id="order-detail-date"></div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Trạng Thái:</div>
+                            <div class="col-7">
+                              <select id="order-detail-status" class="form-select form-select-sm">
+                                <option value="Đang Xử Lý">Đang Xử Lý</option>
+                                <option value="Hoàn Thành">Hoàn Thành</option>
+                                <option value="Đã Hủy">Đã Hủy</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-5 text-muted">Tổng Tiền:</div>
+                            <div class="col-7 fw-bold" id="order-detail-amount"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h6 class="mb-2">Thông Tin Khách Hàng</h6>
+                        <div class="bg-light p-3 rounded">
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Tên Khách Hàng:</div>
+                            <div class="col-7" id="order-detail-customer"></div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Số Điện Thoại:</div>
+                            <div class="col-7">0987654321</div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Email:</div>
+                            <div class="col-7">khachhang@example.com</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-5 text-muted">Địa Chỉ:</div>
+                            <div class="col-7">123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h6 class="mb-2">Sản Phẩm Đã Đặt</h6>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Sản Phẩm</th>
+                            <th>Đơn Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Thành Tiền</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Bánh Kem Socola</div>
+                              </div>
+                            </td>
+                            <td>45.000₫</td>
+                            <td>2</td>
+                            <td>90.000₫</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Bánh Croissant</div>
+                              </div>
+                            </td>
+                            <td>32.000₫</td>
+                            <td>1</td>
+                            <td>32.000₫</td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+                            <td class="fw-bold" id="order-detail-total">122.000₫</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary me-2">
+                      <i class="bi bi-printer"></i> In Hóa Đơn
+                    </button>
+                    <button type="button" class="btn btn-primary" id="update-order-btn">
+                      <i class="bi bi-check-lg"></i> Cập Nhật
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-white p-3">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng...">
+                    </div>
+                  </div>
+                  <div class="col-md-8 d-flex flex-wrap justify-content-md-end gap-2">
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Tất Cả Trạng Thái</option>
+                      <option>Hoàn Thành</option>
+                      <option>Đang Xử Lý</option>
+                      <option>Đã Hủy</option>
+                    </select>
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Hôm Nay</option>
+                      <option>Hôm Qua</option>
+                      <option>7 Ngày Qua</option>
+                      <option>30 Ngày Qua</option>
+                      <option>Tùy Chỉnh</option>
+                    </select>
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Sắp xếp: Mới Nhất</option>
+                      <option>Sắp xếp: Cũ Nhất</option>
+                      <option>Sắp xếp: Giá Trị (Cao-Thấp)</option>
+                      <option>Sắp xếp: Giá Trị (Thấp-Cao)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Mã Đơn</th>
+                        <th>Khách Hàng</th>
+                        <th>Ngày</th>
+                        <th>Sản Phẩm</th>
+                        <th>Số Tiền</th>
+                        <th>Trạng Thái</th>
+                        <th class="text-end">Thao Tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                      <!-- Orders will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>Hiển thị <span class="fw-bold">1</span> đến <span class="fw-bold">8</span> của <span class="fw-bold">245</span> kết quả</div>
+                  <nav>
+                    <ul class="pagination mb-0">
+                      <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Staff Page -->
+          <div id="staff-page" class="page-content d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Quản Lý Nhân Viên</h2>
+              <button id="add-employee-btn" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Thêm Nhân Viên Mới
+              </button>
+            </div>
+
+            <!-- Employee Form (Add/Edit) -->
+            <div id="employee-form-container" class="card mb-4 d-none">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 id="employee-form-title">Thêm Nhân Viên Mới</h5>
+                <button id="close-employee-form" class="btn-close"></button>
+              </div>
+              <div class="card-body">
+                <form id="employee-form">
+                  <input type="hidden" id="employee-id">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="employee-name" class="form-label">Tên Nhân Viên</label>
+                      <input type="text" class="form-control" id="employee-name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="employee-role" class="form-label">Vị Trí</label>
+                      <select class="form-select" id="employee-role">
+                        <option>Quản Lý</option>
+                        <option>Nhân Viên Bán Hàng</option>
+                        <option>Nhân Viên Làm Bánh</option>
+                        <option>Thu Ngân</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="employee-email" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="employee-email" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="employee-phone" class="form-label">Số Điện Thoại</label>
+                      <input type="text" class="form-control" id="employee-phone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="employee-joined" class="form-label">Ngày Vào Làm</label>
+                      <input type="text" class="form-control" id="employee-joined" placeholder="DD/MM/YYYY" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="employee-status" class="form-label">Trạng Thái</label>
+                      <select class="form-select" id="employee-status">
+                        <option>Đang Làm</option>
+                        <option>Nghỉ Phép</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" id="cancel-employee-form" class="btn btn-secondary">Hủy Bỏ</button>
+                    <button type="submit" class="btn btn-primary">Lưu Nhân Viên</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card border-start border-primary border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Tổng Nhân Viên</div>
+                    <div class="fs-4 fw-bold" id="total-employees">12</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card border-start border-success border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Đang Làm</div>
+                    <div class="fs-4 fw-bold" id="active-employees">10</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card border-start border-danger border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Nghỉ Phép</div>
+                    <div class="fs-4 fw-bold" id="on-leave-employees">2</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-white p-3">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" class="form-control" placeholder="Tìm kiếm nhân viên...">
+                    </div>
+                  </div>
+                  <div class="col-md-8 d-flex justify-content-md-end gap-2">
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Tất Cả Vị Trí</option>
+                      <option>Quản Lý</option>
+                      <option>Nhân Viên Bán Hàng</option>
+                      <option>Nhân Viên Làm Bánh</option>
+                      <option>Thu Ngân</option>
+                    </select>
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Tất Cả Trạng Thái</option>
+                      <option>Đang Làm</option>
+                      <option>Nghỉ Phép</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Nhân Viên</th>
+                        <th>Vị Trí</th>
+                        <th>Liên Hệ</th>
+                        <th>Ngày Vào Làm</th>
+                        <th>Trạng Thái</th>
+                        <th class="text-end">Thao Tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="employees-table-body">
+                      <!-- Employees will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>Hiển thị <span class="fw-bold">1</span> đến <span class="fw-bold">8</span> của <span class="fw-bold">12</span> kết quả</div>
+                  <nav>
+                    <ul class="pagination mb-0">
+                      <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customers Page -->
+          <div id="customers-page" class="page-content d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Quản Lý Khách Hàng</h2>
+              <button class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Thêm Khách Hàng
+              </button>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-primary border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Tổng Khách Hàng</div>
+                    <div class="fs-4 fw-bold">1.250</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-purple border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Khách VIP</div>
+                    <div class="fs-4 fw-bold">85</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-success border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Khách Thường Xuyên</div>
+                    <div class="fs-4 fw-bold">420</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="card border-start border-info border-4">
+                  <div class="card-body">
+                    <div class="text-muted">Khách Mới (Tháng Này)</div>
+                    <div class="fs-4 fw-bold">45</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Detail Modal -->
+            <div class="modal fade" id="customerDetailModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Chi Tiết Khách Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row mb-4">
+                      <div class="col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                          <div class="customer-avatar me-3">
+                            <i class="bi bi-person-circle fs-1"></i>
+                          </div>
+                          <div>
+                            <h5 id="customer-detail-name" class="mb-0"></h5>
+                            <div class="text-muted small">Mã: KH-<span id="customer-detail-id"></span></div>
+                            <span id="customer-detail-badge" class="badge bg-success mt-1"></span>
+                          </div>
+                        </div>
+                        
+                        <div class="bg-light p-3 rounded">
+                          <h6 class="mb-2">Thông Tin Liên Hệ</h6>
+                          <div class="row mb-2">
+                            <div class="col-4 text-muted">Email:</div>
+                            <div class="col-8" id="customer-detail-email"></div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-4 text-muted">Số Điện Thoại:</div>
+                            <div class="col-8" id="customer-detail-phone"></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4 text-muted">Địa Chỉ:</div>
+                            <div class="col-8">123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="bg-light p-3 rounded mb-3">
+                          <h6 class="mb-2">Thống Kê Mua Hàng</h6>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Tổng Đơn Hàng:</div>
+                            <div class="col-7" id="customer-detail-orders"></div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Tổng Chi Tiêu:</div>
+                            <div class="col-7 fw-bold" id="customer-detail-spent"></div>
+                          </div>
+                          <div class="row mb-2">
+                            <div class="col-5 text-muted">Đơn Hàng Gần Nhất:</div>
+                            <div class="col-7" id="customer-detail-last-order"></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-5 text-muted">Sản Phẩm Yêu Thích:</div>
+                            <div class="col-7">Bánh Kem Socola</div>
+                          </div>
+                        </div>
+                        
+                        <div class="bg-light p-3 rounded">
+                          <h6 class="mb-2">Ghi Chú</h6>
+                          <textarea class="form-control" rows="3" placeholder="Thêm ghi chú về khách hàng..."></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <h6 class="mb-2">Lịch Sử Đơn Hàng Gần Đây</h6>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Mã Đơn</th>
+                            <th>Ngày</th>
+                            <th>Sản Phẩm</th>
+                            <th>Số Tiền</th>
+                            <th>Trạng Thái</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>#ĐH-042</td>
+                            <td id="customer-detail-last-order-date"></td>
+                            <td>3 sản phẩm</td>
+                            <td>245.000₫</td>
+                            <td><span class="badge bg-success">Hoàn Thành</span></td>
+                          </tr>
+                          <tr>
+                            <td>#ĐH-035</td>
+                            <td>20/03/2025</td>
+                            <td>2 sản phẩm</td>
+                            <td>187.000₫</td>
+                            <td><span class="badge bg-success">Hoàn Thành</span></td>
+                          </tr>
+                          <tr>
+                            <td>#ĐH-028</td>
+                            <td>18/03/2025</td>
+                            <td>4 sản phẩm</td>
+                            <td>320.000₫</td>
+                            <td><span class="badge bg-success">Hoàn Thành</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary me-2">
+                      <i class="bi bi-envelope"></i> Gửi Email
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                      <i class="bi bi-check-lg"></i> Cập Nhật
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header bg-white p-3">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" class="form-control" placeholder="Tìm kiếm khách hàng...">
+                    </div>
+                  </div>
+                  <div class="col-md-8 d-flex justify-content-md-end gap-2">
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Tất Cả Trạng Thái</option>
+                      <option>VIP</option>
+                      <option>Thường Xuyên</option>
+                      <option>Thỉnh Thoảng</option>
+                      <option>Mới</option>
+                    </select>
+                    <select class="form-select" style="max-width: 200px;">
+                      <option>Sắp xếp: Mới Nhất</option>
+                      <option>Sắp xếp: Chi Tiêu (Cao-Thấp)</option>
+                      <option>Sắp xếp: Đơn Hàng (Cao-Thấp)</option>
+                      <option>Sắp xếp: Tên (A-Z)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Khách Hàng</th>
+                        <th>Liên Hệ</th>
+                        <th>Đơn Hàng</th>
+                        <th>Chi Tiêu</th>
+                        <th>Đơn Gần Nhất</th>
+                        <th>Trạng Thái</th>
+                        <th class="text-end">Thao Tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="customers-table-body">
+                      <!-- Customers will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>Hiển thị <span class="fw-bold">1</span> đến <span class="fw-bold">8</span> của <span class="fw-bold">1.250</span> kết quả</div>
+                  <nav>
+                    <ul class="pagination mb-0">
+                      <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reports Page -->
+          <div id="reports-page" class="page-content d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Báo Cáo & Thống Kê</h2>
+              <div class="d-flex gap-2">
+                <select class="form-select" style="max-width: 200px;">
+                  <option>Tháng Này</option>
+                  <option>Tháng Trước</option>
+                  <option>Quý Này</option>
+                  <option>Năm Nay</option>
+                  <option>Tùy Chỉnh</option>
+                </select>
+                <button class="btn btn-outline-primary">
+                  <i class="bi bi-file-earmark-arrow-down"></i> Xuất Báo Cáo
+                </button>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Doanh Thu</p>
+                    <h2 class="stat-card-value">45.250.000₫</h2>
+                    <p class="stat-card-change positive">+15.2% so với tháng trước</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Đơn Hàng</p>
+                    <h2 class="stat-card-value">1.245</h2>
+                    <p class="stat-card-change positive">+8.7% so với tháng trước</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Khách Hàng Mới</p>
+                    <h2 class="stat-card-value">85</h2>
+                    <p class="stat-card-change positive">+12.3% so với tháng trước</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="stat-card-body">
+                    <p class="stat-card-title">Giá Trị Đơn TB</p>
+                    <h2 class="stat-card-value">36.350₫</h2>
+                    <p class="stat-card-change positive">+5.8% so với tháng trước</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-lg-6 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Doanh Thu Theo Thời Gian</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="revenue-chart">
+                      <div class="revenue-item">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Tháng 1</span>
+                          <span>32.450.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 72%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Tháng 2</span>
+                          <span>38.750.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Tháng 3</span>
+                          <span>45.250.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 100%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Dự Kiến Tháng 4</span>
+                          <span>48.500.000₫</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-secondary" role="progressbar" style="width: 107%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Doanh Thu Theo Danh Mục</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="revenue-chart">
+                      <div class="revenue-item">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Bánh Kem</span>
+                          <span>18.250.000₫ (40.3%)</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 40.3%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Bánh Ngọt</span>
+                          <span>15.750.000₫ (34.8%)</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 34.8%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Bánh Mì</span>
+                          <span>8.450.000₫ (18.7%)</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 18.7%"></div>
+                        </div>
+                      </div>
+                      <div class="revenue-item mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                          <span>Cookies</span>
+                          <span>2.800.000₫ (6.2%)</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 6.2%"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Top 5 Sản Phẩm Bán Chạy</h5>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Doanh Thu</th>
+                            <th>% Tổng</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Bánh Kem Socola</div>
+                              </div>
+                            </td>
+                            <td>542</td>
+                            <td>24.390.000₫</td>
+                            <td>18.5%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Bánh Cupcake Vanilla</div>
+                              </div>
+                            </td>
+                            <td>485</td>
+                            <td>20.370.000₫</td>
+                            <td>15.4%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Bánh Tiramisu</div>
+                              </div>
+                            </td>
+                            <td>420</td>
+                            <td>15.540.000₫</td>
+                            <td>11.8%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Bánh Croissant</div>
+                              </div>
+                            </td>
+                            <td>315</td>
+                            <td>14.805.000₫</td>
+                            <td>11.2%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="product-icon me-2">
+                                  <i class="bi bi-cake2"></i>
+                                </div>
+                                <div>Cookies Socola</div>
+                              </div>
+                            </td>
+                            <td>280</td>
+                            <td>8.960.000₫</td>
+                            <td>6.8%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title">Thống Kê Theo Thời Gian</h5>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Thời Gian</th>
+                            <th>Đơn Hàng</th>
+                            <th>Doanh Thu</th>
+                            <th>Tăng Trưởng</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="fw-medium">Hôm nay</td>
+                            <td>45</td>
+                            <td>1.650.000₫</td>
+                            <td class="text-success">+5.2%</td>
+                          </tr>
+                          <tr>
+                            <td class="fw-medium">Tuần này</td>
+                            <td>285</td>
+                            <td>10.450.000₫</td>
+                            <td class="text-success">+8.7%</td>
+                          </tr>
+                          <tr>
+                            <td class="fw-medium">Tháng này</td>
+                            <td>1.245</td>
+                            <td>45.250.000₫</td>
+                            <td class="text-success">+15.2%</td>
+                          </tr>
+                          <tr>
+                            <td class="fw-medium">Quý này</td>
+                            <td>3.580</td>
+                            <td>116.450.000₫</td>
+                            <td class="text-success">+12.8%</td>
+                          </tr>
+                          <tr>
+                            <td class="fw-medium">Năm nay</td>
+                            <td>12.450</td>
+                            <td>425.750.000₫</td>
+                            <td class="text-success">+18.5%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings Page -->
+          <div id="settings-page" class="page-content d-none">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2>Cài Đặt Hệ Thống</h2>
+              <button class="btn btn-primary">
+                <i class="bi bi-save"></i> Lưu Thay Đổi
+              </button>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">Thông Tin Cửa Hàng</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="store-name" class="form-label">Tên Cửa Hàng</label>
+                    <input type="text" class="form-control" id="store-name" value="Tiệm Bánh Hạnh Phúc">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="store-phone" class="form-label">Số Điện Thoại</label>
+                    <input type="text" class="form-control" id="store-phone" value="0987654321">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="store-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="store-email" value="info@tiembanh.com">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="store-address" class="form-label">Địa Chỉ</label>
+                    <input type="text" class="form-control" id="store-address" value="123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label for="store-description" class="form-label">Mô Tả</label>
+                    <textarea class="form-control" id="store-description" rows="3">Tiệm Bánh Hạnh Phúc - Nơi mang đến cho bạn những chiếc bánh ngọt ngào và hạnh phúc.</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">Cài Đặt Thanh Toán</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="currency" class="form-label">Đơn Vị Tiền Tệ</label>
+                    <select class="form-select" id="currency">
+                      <option selected>VNĐ (₫)</option>
+                      <option>USD ($)</option>
+                      <option>EUR (€)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="tax-rate" class="form-label">Thuế VAT (%)</label>
+                    <input type="number" class="form-control" id="tax-rate" value="10">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Phương Thức Thanh Toán</label>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="payment-cash" checked>
+                      <label class="form-check-label" for="payment-cash">Tiền Mặt</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="payment-card" checked>
+                      <label class="form-check-label" for="payment-card">Thẻ Tín Dụng/Ghi Nợ</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="payment-momo" checked>
+                      <label class="form-check-label" for="payment-momo">Ví MoMo</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="payment-zalopay" checked>
+                      <label class="form-check-label" for="payment-zalopay">ZaloPay</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">Cài Đặt Hệ Thống</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="language" class="form-label">Ngôn Ngữ</label>
+                    <select class="form-select" id="language">
+                      <option selected>Tiếng Việt</option>
+                      <option>English</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="timezone" class="form-label">Múi Giờ</label>
+                    <select class="form-select" id="timezone">
+                      <option selected>(GMT+7) Hồ Chí Minh, Hà Nội, Bangkok</option>
+                      <option>(GMT+8) Singapore, Kuala Lumpur, Beijing</option>
+                      <option>(GMT+9) Tokyo, Seoul</option>
+                    </select>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Thông Báo</label>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="notify-new-order" checked>
+                      <label class="form-check-label" for="notify-new-order">Thông báo khi có đơn hàng mới</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="notify-low-stock" checked>
+                      <label class="form-check-label" for="notify-low-stock">Thông báo khi sản phẩm sắp hết hàng</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="notify-daily-report" checked>
+                      <label class="form-check-label" for="notify-daily-report">Nhận báo cáo doanh thu hàng ngày qua email</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="notify-system-updates" checked>
+                      <label class="form-check-label" for="notify-system-updates">Thông báo khi có cập nhật hệ thống</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Tài Khoản & Bảo Mật</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="username" class="form-label">Tên Đăng Nhập</label>
+                    <input type="text" class="form-control bg-light" id="username" value="admin" disabled>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="admin-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="admin-email" value="admin@tiembanh.com">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="current-password" class="form-label">Mật Khẩu Hiện Tại</label>
+                    <input type="password" class="form-control" id="current-password" placeholder="••••••••">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="new-password" class="form-label">Mật Khẩu Mới</label>
+                    <input type="password" class="form-control" id="new-password" placeholder="••••••••">
+                  </div>
+                  <div class="col-12 mb-4">
+                    <button class="btn btn-primary">Đổi Mật Khẩu</button>
+                  </div>
+                </div>
+
+                <hr>
+
+                <h5 class="mb-3">Phiên Đăng Nhập</h5>
+                <div class="bg-light p-3 rounded mb-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="fw-medium">Thiết bị hiện tại</div>
+                      <div class="text-muted small">Windows 10 • Chrome • TP. Hồ Chí Minh, Việt Nam</div>
+                      <div class="text-success small mt-1">Đang hoạt động</div>
+                    </div>
+                    <button class="btn btn-sm btn-danger">Đăng Xuất</button>
+                  </div>
+                </div>
+                <div class="bg-light p-3 rounded">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="fw-medium">iPhone 13</div>
+                      <div class="text-muted small">iOS 15 • Safari • TP. Hồ Chí Minh, Việt Nam</div>
+                      <div class="text-muted small mt-1">Hoạt động 2 giờ trước</div>
+                    </div>
+                    <button class="btn btn-sm btn-danger">Đăng Xuất</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+</html>
+
