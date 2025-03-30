@@ -9,17 +9,24 @@
   --info-color: #17a2b8;
   --light-color: #f8f9fa;
   --dark-color: #343a40;
-  --border-color: #dee2e6;
   --border-radius: 0.375rem;
   --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   --transition-speed: 0.3s;
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #212529;
+  --border-color: #dee2e6;
 }
+
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f5f5;
   color: #333;
   overflow-x: hidden;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Login Page */
@@ -36,6 +43,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100vw;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
@@ -139,6 +147,44 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+/* Sidebar responsive */
+@media (max-width: 767.98px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 1030;
+    transition: left 0.3s ease;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .sidebar.show {
+    left: 0;
+  }
+  
+  #sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1020;
+  }
+  
+  #sidebar-overlay.show {
+    display: block;
+  }
+  
+  #content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
 }
 
 #content {
@@ -485,7 +531,7 @@ body {
 
 /* Make sure modals appear on top */
 .modal {
-  z-index: 1050;
+  z-index: 500;
 }
 
 /* Badge colors */
@@ -542,3 +588,102 @@ body {
   }
 }
 
+@media (max-width: 767.98px) {
+  .responsive-table {
+    display: block;
+    width: 100%;
+  }
+  
+  .responsive-table thead {
+    display: none;
+  }
+  
+  .responsive-table tbody {
+    display: block;
+    width: 100%;
+  }
+  
+  .responsive-table tr {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+  }
+  
+  .responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border: none;
+  }
+  
+  .responsive-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+}
+
+/* Notifications */
+.notifications-menu {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unread {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+.x-small {
+  font-size: 0.75rem;
+}
+
+.modal-backdrop {
+  /* bug fix - no overlay */    
+  display: none;    
+}
+
+/* Sortable Tables */
+.sortable {
+  cursor: pointer;
+  position: relative;
+}
+
+.sortable::after {
+  content: '\F282';
+  font-family: bootstrap-icons;
+  position: absolute;
+  right: 8px;
+  opacity: 0.5;
+  font-size: 0.8em;
+}
+
+.sortable.sort-asc::after {
+  content: '\F128';
+  opacity: 1;
+}
+
+.sortable.sort-desc::after {
+  content: '\F12B';
+  opacity: 1;
+}
+
+.sortable:hover::after {
+  opacity: 0.8;
+}
+
+/* Đảm bảo có đủ không gian cho icon */
+th.sortable {
+  padding-right: 30px;
+}

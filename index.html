@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản Lý Tiệm Bánh</title>
-  <!-- Bootstrap CSS -->
+  <div class="sidebar-header">
+    <h3>Quản Lý Tiệm Bánh</h3>
+    <div class="theme-toggle ms-2">
+      <button id="theme-toggle-btn" class="btn btn-sm">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+    </div>
+  </div>  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
@@ -12,105 +18,128 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <!-- Login Page -->
-    <div id="login-page">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-6 col-lg-5">
-            <div class="login-form">
-              <div class="text-center mb-4">
-                <i class="bi bi-cake2 display-1 text-primary"></i>
-                <h2 class="mt-3">Đăng Nhập Hệ Thống</h2>
-                <p class="text-muted">Quản lý tiệm bánh của bạn</p>
-              </div>
-              <div id="login-error" class="alert alert-danger d-none" role="alert">
-                Tên đăng nhập hoặc mật khẩu không đúng!
-              </div>
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="username" class="form-label">Tên đăng nhập</label>
-                  <input type="text" class="form-control" id="username" required>
+<div id="app">
+  <!-- Login Page -->
+  <div id="login-page">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="login-form">
+            <div class="text-center mb-4">
+              <i class="bi bi-cake2 display-1"></i>
+              <h2 class="mt-3 fw-bold">Đăng Nhập Hệ Thống</h2>
+              <p class="text-muted">Quản lý tiệm bánh của bạn</p>
+            </div>
+            <div id="login-error" class="alert alert-danger d-none" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              Tên đăng nhập hoặc mật khẩu không đúng!
+            </div>
+            <form id="login-form">
+              <div class="mb-3">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light">
+                      <i class="bi bi-person"></i>
+                    </span>
+                  <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập" required>
                 </div>
-                <div class="mb-3">
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between">
+
                   <label for="password" class="form-label">Mật khẩu</label>
-                  <input type="password" class="form-control" id="password" required>
+                  <a href="#" class="text-decoration-none small">Quên mật khẩu?</a>
                 </div>
-                <div class="mb-3 d-flex justify-content-between">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me">
-                    <label class="form-check-label" for="remember-me">
-                      Ghi nhớ đăng nhập
-                    </label>
-                  </div>
-                  <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
+                <div class="input-group">
+                    <span class="input-group-text bg-light">
+                      <i class="bi bi-lock"></i>
+                    </span>
+                  <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" required>
+                  <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <i class="bi bi-eye-slash"></i>
+                  </button>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Đăng Nhập</button>
-                <div class="text-center mt-3 text-muted">
-                  <small>Tài khoản demo: admin / password</small>
-                </div>
-              </form>
+              </div>
+              <div class="mb-3 form-check">
+                <input class="form-check-input" type="checkbox" id="remember-me">
+                <label class="form-check-label" for="remember-me">
+                  Ghi nhớ đăng nhập
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 mb-3 py-2 fw-bold">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Đăng Nhập
+              </button>
+              <div class="text-center mt-3">
+                <p class="text-muted small mb-0">Đăng nhập lần cuối: <span id="last-login">2025-03-29 07:28:39</span></p>
+                <p class="text-muted small">Tài khoản demo: admin / password</p>
+              </div>
+            </form>
+            <div class="login-footer text-center mt-4 pt-3 border-top">
+              <p class="mb-0 text-muted small">© 2025 - Phần mềm Quản lý Tiệm bánh</p>
+              <p class="mb-0 text-muted small">Đăng nhập với tư cách: <span class="fw-bold">Phunguy65ok</span></p>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Main Dashboard -->
-    <div id="dashboard-container" class="d-none">
-      <!-- Sidebar Toggle Button (Mobile) -->
-      <button id="sidebar-toggle" class="btn btn-light d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1000">
-        <i class="bi bi-list"></i>
-      </button>
+  <!-- Main Dashboard -->
+  <div id="dashboard-container" class="d-none">
+    <div id="sidebar-overlay"></div>
+    <!-- Sidebar Toggle Button (Mobile) -->
+    <button id="sidebar-toggle" class="btn btn-light d-md-none position-fixed top-0 start-0 mt-2 ms-2 z-index-1000">
+      <i class="bi bi-list"></i>
+    </button>
 
-      <!-- Sidebar -->
-      <nav id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-          <h3>Quản Lý Tiệm Bánh</h3>
-        </div>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#" data-page="dashboard">
-              <i class="bi bi-graph-up"></i> Tổng Quan
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-page="products">
-              <i class="bi bi-cake2"></i> Sản Phẩm
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-page="orders">
-              <i class="bi bi-bag"></i> Đơn Hàng
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-page="staff">
-              <i class="bi bi-people"></i> Nhân Viên
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-page="customers">
-              <i class="bi bi-person"></i> Khách Hàng
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-page="reports">
-              <i class="bi bi-file-earmark-text"></i> Báo Cáo
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-page="settings">
-              <i class="bi bi-gear"></i> Cài Đặt
-            </a>
-          </li>
-        </ul>
-        <div class="sidebar-footer">
-          <button id="logout-btn" class="btn btn-outline-danger w-100">
-            <i class="bi bi-box-arrow-right"></i> Đăng Xuất
-          </button>
-        </div>
-      </nav>
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h3>Quản Lý Tiệm Bánh</h3>
+      </div>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-page="dashboard">
+            <i class="bi bi-graph-up"></i> Tổng Quan
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="products">
+            <i class="bi bi-cake2"></i> Sản Phẩm
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="orders">
+            <i class="bi bi-bag"></i> Đơn Hàng
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="staff">
+            <i class="bi bi-people"></i> Nhân Viên
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="customers">
+            <i class="bi bi-person"></i> Khách Hàng
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="reports">
+            <i class="bi bi-file-earmark-text"></i> Báo Cáo
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-page="settings">
+            <i class="bi bi-gear"></i> Cài Đặt
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <button id="logout-btn" class="btn btn-outline-danger w-100">
+          <i class="bi bi-box-arrow-right"></i> Đăng Xuất
+        </button>
+      </div>
+    </nav>
 
       <!-- Main Content -->
       <main id="content">
@@ -119,8 +148,59 @@
           <h1 id="page-title">Tổng Quan</h1>
           <div class="user-menu">
             <div class="notifications">
-              <i class="bi bi-bell"></i>
-              <span class="badge bg-danger">3</span>
+              <div class="dropdown">
+                <button class="btn position-relative" type="button" data-bs-toggle="dropdown">
+                  <i class="bi bi-bell"></i>
+                  <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">3</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end notifications-menu p-0" style="width: 320px;">
+                  <div class="notifications-header d-flex justify-content-between align-items-center p-3 border-bottom">
+                    <h6 class="mb-0">Thông Báo (3)</h6>
+                    <a href="#" class="text-decoration-none small">Đánh dấu tất cả đã đọc</a>
+                  </div>
+                  <div class="notifications-list">
+                    <a href="#" class="dropdown-item p-3 border-bottom unread">
+                      <div class="d-flex">
+                        <div class="notification-icon me-3 bg-primary text-white rounded-circle">
+                          <i class="bi bi-bag"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <p class="mb-1 fw-bold">Đơn hàng mới #ĐH-042</p>
+                          <p class="mb-1 small">Khách hàng: Nguyễn Văn A - Tổng: 245.000₫</p>
+                          <p class="mb-0 text-muted x-small">15 phút trước</p>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#" class="dropdown-item p-3 border-bottom unread">
+                      <div class="d-flex">
+                        <div class="notification-icon me-3 bg-warning text-white rounded-circle">
+                          <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <p class="mb-1 fw-bold">Cảnh báo hết hàng</p>
+                          <p class="mb-1 small">Bánh Kem Socola sắp hết hàng (còn 3)</p>
+                          <p class="mb-0 text-muted x-small">45 phút trước</p>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#" class="dropdown-item p-3 border-bottom unread">
+                      <div class="d-flex">
+                        <div class="notification-icon me-3 bg-success text-white rounded-circle">
+                          <i class="bi bi-graph-up"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <p class="mb-1 fw-bold">Báo cáo doanh thu</p>
+                          <p class="mb-1 small">Báo cáo doanh thu ngày 22/03/2025 đã sẵn sàng</p>
+                          <p class="mb-0 text-muted x-small">2 giờ trước</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="notifications-footer p-2 text-center border-top">
+                    <a href="#" class="text-decoration-none small">Xem tất cả thông báo</a>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="user-info">
               <div class="user-avatar">QT</div>
@@ -411,12 +491,12 @@
                   <table class="table table-hover product-table">
                     <thead>
                       <tr>
-                        <th>Sản Phẩm</th>
-                        <th>Danh Mục</th>
-                        <th>Giá</th>
-                        <th>Tồn Kho</th>
-                        <th>Trạng Thái</th>
-                        <th class="text-end">Thao Tác</th>
+                        <th class="sortable" data-sort="name">Sản Phẩm</th>
+                        <th class="sortable" data-sort="category">Danh Mục</th>
+                        <th class="sortable" data-sort="price">Giá</th>
+                        <th class="sortable" data-sort="stock">Tồn Kho</th>
+                        <th class="sortable" data-sort="status">Trạng Thái</th>
+                        <th>Thao Tác</th>
                       </tr>
                     </thead>
                     <tbody id="products-table-body">
@@ -743,6 +823,14 @@
                       </tr>
                     </thead>
                     <tbody id="orders-table-body">
+                      <tr>
+                        <td data-label="Mã Đơn">#ĐH-001</td>
+                        <td data-label="Khách Hàng">Nguyễn Văn A</td>
+                        <td data-label="Ngày">22/03/2025</td>
+                        <td data-label="Số Tiền">245.000₫</td>
+                        <td data-label="Trạng Thái"><span class="badge bg-success">Hoàn Thành</span></td>
+                        <td data-label="Thao Tác"><button class="btn btn-sm btn-primary">Chi tiết</button></td>
+                      </tr>
                       <!-- Orders will be loaded here by JavaScript -->
                     </tbody>
                   </table>
@@ -1025,7 +1113,7 @@
                     
                     <h6 class="mb-2">Lịch Sử Đơn Hàng Gần Đây</h6>
                     <div class="table-responsive">
-                      <table class="table">
+                      <table class="table table-hover responsive-table">
                         <thead>
                           <tr>
                             <th>Mã Đơn</th>
@@ -1617,10 +1705,31 @@
     </div>
   </div>
 
-  <!-- Bootstrap JS Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom JS -->
-  <script src="script.js"></script>
+<!-- Bootstrap & jQuery JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="script.js"></script>
+<script>
+  // Toggle password visibility
+  document.querySelector('.toggle-password').addEventListener('click', function() {
+    const passwordInput = document.querySelector('#password');
+    const icon = this.querySelector('i');
+
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      icon.classList.replace('bi-eye-slash', 'bi-eye');
+    } else {
+      passwordInput.type = 'password';
+      icon.classList.replace('bi-eye', 'bi-eye-slash');
+    }
+  });
+
+  // Set the current user and date
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('last-login').textContent = '2025-03-29 07:28:39';
+  });
+</script>
 </body>
 </html>
 

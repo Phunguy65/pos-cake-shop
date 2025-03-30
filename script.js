@@ -1215,3 +1215,135 @@ function viewCustomer(id) {
   }
 }
 
+document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  const icon = this.querySelector('i');
+  
+  if (document.body.classList.contains('dark-mode')) {
+    icon.classList.replace('bi-moon-stars', 'bi-sun');
+    localStorage.setItem('darkMode', 'enabled');
+  } else {
+    icon.classList.replace('bi-sun', 'bi-moon-stars');
+    localStorage.setItem('darkMode', 'disabled');
+  }
+});
+
+// Check saved theme on page load
+document.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+    document.querySelector('#theme-toggle-btn i').classList.replace('bi-moon-stars', 'bi-sun');
+  }
+});
+
+// Sidebar Toggle for Mobile
+document.getElementById('sidebar-toggle').addEventListener('click', function() {
+  document.getElementById('sidebar').classList.toggle('show');
+  document.getElementById('sidebar-overlay').classList.toggle('show');
+});
+
+// Close sidebar when clicking overlay
+document.getElementById('sidebar-overlay').addEventListener('click', function() {
+  document.getElementById('sidebar').classList.remove('show');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+});
+
+// Close sidebar when clicking nav-link on mobile
+document.querySelectorAll('#sidebar .nav-link').forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (window.innerWidth < 768) {
+      document.getElementById('sidebar').classList.remove('show');
+      document.getElementById('sidebar-overlay').classList.remove('show');
+    }
+  });
+});
+
+// Table Sorting
+document.addEventListener('DOMContentLoaded', function() {
+  // Tìm tất cả các bảng có thể sắp xếp
+  document.querySelectorAll('table').forEach(table => {
+    const headers = table.querySelectorAll('th.sortable');
+    
+    headers.forEach(header => {
+      header.addEventListener('click', function() {
+        const sortField = this.getAttribute('data-sort');
+        const currentIsAsc = this.classList.contains('sort-asc');
+        
+        // Reset tất cả headers
+        headers.forEach(h => {
+          h.classList.remove('sort-asc', 'sort-desc');
+        });
+        
+        // Thiết lập hướng sắp xếp mới
+        if (currentIsAsc) {
+          this.classList.add('sort-desc');
+          sortTable(table, sortField, 'desc');
+        } else {
+          this.classList.add('sort-asc');
+          sortTable(table, sortField, 'asc');
+        }
+        
+        // Lưu cài đặt sắp xếp vào localStorage
+        const tableId = table.id || 'default-table';
+        localStorage.setItem(`${tableId}-sort-field`, sortField);
+        localStorage.setItem(`${tableId}-sort-direction`, currentIsAsc ? 'desc' : 'asc');
+      });
+    });
+    
+    // Áp dụng sắp xếp mặc định từ localStorage nếu có
+    const tableId = table.id || 'default-table';
+    const savedField = localStorage.getItem(`${tableId}-sort-field`);
+    const savedDirection = localStorage.getItem(`${tableId}-sort-direction`);
+    
+    if (savedField && savedDirection) {
+      const header = Array.from(headers).find(h => h.getAttribute('data-sort') === savedField);
+      if (header) {
+        header.classList.add(savedDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+        sortTable(table, savedField, savedDirection);
+      }
+    }
+  });
+});
+
+// Hàm sắp xếp bảng
+function sortTable(table, field, direction) {
+  const tbody = table.querySelector('tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  
+  // Sắp xếp hàng
+  rows.sort((a, b) => {
+    let aValue = getCellValue(a, field);
+    let bValue = getCellValue(b, field);
+    
+    // Chuyển đổi giá trị thành số nếu có thể
+    if (!isNaN(parseFloat(aValue)) && !isNaN(parseFloat(bValue))) {
+      aValue = parseFloat(aValue.replace(/[^\d.-]/g, ''));
+      bValue = parseFloat(bValue.replace(/[^\d.-]/g, ''));
+    }
+    
+    // So sánh và xác định hướng sắp xếp
+    if (aValue < bValue) {
+      return direction === 'asc' ? -1 : 1;
+    } else if (aValue > bValue) {
+      return direction === 'asc' ? 1 : -1;
+    }
+    return 0;
+  });
+  
+  // Thêm lại các hàng theo thứ tự sắp xếp
+  rows.forEach(row => tbody.appendChild(row));
+}
+
+// Hàm lấy giá trị từ ô dựa vào trường sắp xếp
+function getCellValue(row, field) {
+  // Tìm ô dựa vào thuộc tính data-sort của header
+  const headerIndex = Array.from(row.closest('table').querySelectorAll('th'))
+    .findIndex(th => th.getAttribute('data-sort') === field);
+  
+  if (headerIndex === -1) return '';
+  
+  const cell = row.cells[headerIndex];
+  
+  // Trả về nội dung văn bản của ô
+  return cell.textContent.trim();
+}
