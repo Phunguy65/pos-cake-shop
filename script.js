@@ -1,13 +1,17 @@
 // Sample data
 const products = [
-  { id: 1, name: "Bánh Kem Socola", category: "Bánh Kem", price: "45.000₫", stock: 100, status: "Còn Hàng" },
-  { id: 2, name: "Bánh Cupcake Vanilla", category: "Bánh Ngọt", price: "42.000₫", stock: 85, status: "Còn Hàng" },
-  { id: 3, name: "Bánh Tiramisu", category: "Bánh Kem", price: "35.000₫", stock: 120, status: "Còn Hàng" },
-  { id: 4, name: "Bánh Croissant", category: "Bánh Mì", price: "47.000₫", stock: 75, status: "Còn Hàng" },
-  { id: 5, name: "Bánh Mì Gối", category: "Bánh Mì", price: "37.000₫", stock: 90, status: "Còn Hàng" },
-  { id: 6, name: "Cookies Socola", category: "Cookies", price: "45.000₫", stock: 65, status: "Còn Hàng" },
-  { id: 7, name: "Bánh Bông Lan", category: "Bánh Ngọt", price: "32.000₫", stock: 15, status: "Sắp Hết" },
-  { id: 8, name: "Bánh Donut", category: "Bánh Ngọt", price: "35.000₫", stock: 0, status: "Hết Hàng" },
+  { id: 1, name: "Bánh Kem Socola", category: "Bánh Kem", price: "45.000₫", stock: 100, status: "Còn Hàng", image: "images/kemsocola.jpg" },
+  { id: 2, name: "Bánh Cupcake Vanilla", category: "Bánh Ngọt", price: "42.000₫", stock: 85, status: "Còn Hàng", image: "images/cupcakevanilla.jpg" },
+  { id: 3, name: "Bánh Tiramisu", category: "Bánh Kem", price: "35.000₫", stock: 120, status: "Còn Hàng", image: "images/tiramisu.jpg" },
+  { id: 4, name: "Bánh Croissant", category: "Bánh Mì", price: "47.000₫", stock: 75, status: "Còn Hàng", image: "images/croissant.jpg" },
+  { id: 5, name: "Bánh Mì Gối", category: "Bánh Mì", price: "37.000₫", stock: 90, status: "Còn Hàng", image: "images/banhmigoi.jpg" },
+  { id: 6, name: "Cookies Socola", category: "Cookies", price: "45.000₫", stock: 65, status: "Còn Hàng", image: "images/cookiessocola.jpg" },
+  { id: 7, name: "Bánh Bông Lan", category: "Bánh Ngọt", price: "32.000₫", stock: 15, status: "Sắp Hết", image: "images/bonglan.jpg" },
+  { id: 8, name: "Bánh Donut", category: "Bánh Ngọt", price: "35.000₫", stock: 0, status: "Hết Hàng", image: "images/donut.jpg" },
+  { id: 9, name: "Bánh Mousse", category: "Bánh Kem", price: "50.000₫", stock: 30, status: "Còn Hàng", image: "images/mousse.jpg" },
+  {id: 10, name: "Bánh Cheesecake", category: "Bánh Kem", price: "55.000₫", stock: 40, status: "Còn Hàng", image: "images/chessecake.jpg" },
+  {id: 11, name: "Bánh Red Velvet", category: "Bánh Ngọt", price: "60.000₫", stock: 20, status: "Còn Hàng", image: "images/redvelvet.jpg" },
+  {id: 12, name: "Bánh Brownie", category: "Cookies", price: "40.000₫", stock: 50, status: "Còn Hàng", image: "images/brownie.jpg" },  
 ]
 
 const orders = [
@@ -182,38 +186,26 @@ const customers = [
 // Thêm hàm sắp xếp dữ liệu
 function sortData(data, field, direction = "asc") {
   return [...data].sort((a, b) => {
-    let valueA = a[field]
-    let valueB = b[field]
+    let valueA = a[field];
+    let valueB = b[field];
 
     // Xử lý giá trị tiền tệ
-    if (typeof valueA === "string" && valueA.includes("₫")) {
-      valueA = Number.parseFloat(valueA.replace(/\./g, "").replace("₫", ""))
-      valueB = Number.parseFloat(valueB.replace(/\./g, "").replace("₫", ""))
-    }
-
-    // Xử lý giá trị ngày tháng
-    if (field === "date" || field === "lastOrder" || field === "joined") {
-      const partsA = valueA.split(/[/ :]/)
-      const partsB = valueB.split(/[/ :]/)
-
-      if (partsA.length >= 3 && partsB.length >= 3) {
-        // Chuyển đổi từ DD/MM/YYYY sang YYYY/MM/DD để so sánh
-        valueA = new Date(`${partsA[2]}/${partsA[1]}/${partsA[0]} ${partsA[3] || "00"}:${partsA[4] || "00"}`)
-        valueB = new Date(`${partsB[2]}/${partsB[1]}/${partsB[0]} ${partsB[3] || "00"}:${partsB[4] || "00"}`)
-      }
+    if (field === "price" && typeof valueA === "string" && valueA.includes("₫")) {
+      valueA = Number.parseFloat(valueA.replace(/\./g, "").replace("₫", ""));
+      valueB = Number.parseFloat(valueB.replace(/\./g, "").replace("₫", ""));
     }
 
     // Xử lý giá trị số
-    if (typeof valueA === "string" && !isNaN(valueA)) {
-      valueA = Number.parseFloat(valueA)
-      valueB = Number.parseFloat(valueB)
+    if (field === "stock") {
+      valueA = Number(valueA);
+      valueB = Number(valueB);
     }
 
     // So sánh và sắp xếp
-    if (valueA < valueB) return direction === "asc" ? -1 : 1
-    if (valueA > valueB) return direction === "asc" ? 1 : -1
-    return 0
-  })
+    if (valueA < valueB) return direction === "asc" ? -1 : 1;
+    if (valueA > valueB) return direction === "asc" ? 1 : -1;
+    return 0;
+  });
 }
 
 // Thêm biến lưu trạng thái sắp xếp hiện tại
@@ -223,91 +215,52 @@ let currentSortDirection = "asc"
 // Thêm hàm xử lý sự kiện sắp xếp cho các bảng
 function setupSortingEvents() {
   // Sắp xếp sản phẩm
-  document
-    .querySelector('#products-page .form-select[style*="max-width: 200px"]:last-child')
-    .addEventListener("change", function () {
-      const sortOption = this.value
-      let field = "name"
-      let direction = "asc"
+  const productsSortDropdown = document.querySelector('#products-sort-dropdown');
+  if (productsSortDropdown) {
+    productsSortDropdown.addEventListener('change', function () {
+      const sortOption = this.value.split('-'); // Tách field và direction
+      const field = sortOption[0];
+      const direction = sortOption[1];
 
-      if (sortOption === "Sắp xếp: Tên") {
-        field = "name"
-        direction = "asc"
-      } else if (sortOption === "Sắp xếp: Giá (Thấp đến Cao)") {
-        field = "price"
-        direction = "asc"
-      } else if (sortOption === "Sắp xếp: Giá (Cao đến Thấp)") {
-        field = "price"
-        direction = "desc"
-      } else if (sortOption === "Sắp xếp: Tồn Kho") {
-        field = "stock"
-        direction = "desc"
-      }
+      currentSortField = field;
+      currentSortDirection = direction;
 
-      currentSortField = field
-      currentSortDirection = direction
-
-      const sortedProducts = sortData(products, field, direction)
-      renderProductsTableWithData(sortedProducts)
-    })
+      const sortedProducts = sortData(products, field, direction);
+      renderProductsTableWithData(sortedProducts, itemsPerPage, currentPage);
+    });
+  }
 
   // Sắp xếp đơn hàng
-  document
-    .querySelector('#orders-page .form-select[style*="max-width: 200px"]:last-child')
-    .addEventListener("change", function () {
-      const sortOption = this.value
-      let field = "id"
-      let direction = "desc"
+  const ordersSortDropdown = document.querySelector('#orders-sort-dropdown');
+  if (ordersSortDropdown) {
+    ordersSortDropdown.addEventListener('change', function () {
+      const sortOption = this.value.split('-'); // Tách field và direction
+      const field = sortOption[0];
+      const direction = sortOption[1];
 
-      if (sortOption === "Sắp xếp: Mới Nhất") {
-        field = "id"
-        direction = "desc"
-      } else if (sortOption === "Sắp xếp: Cũ Nhất") {
-        field = "id"
-        direction = "asc"
-      } else if (sortOption === "Sắp xếp: Giá Trị (Cao-Thấp)") {
-        field = "amount"
-        direction = "desc"
-      } else if (sortOption === "Sắp xếp: Giá Trị (Thấp-Cao)") {
-        field = "amount"
-        direction = "asc"
-      }
+      currentSortField = field;
+      currentSortDirection = direction;
 
-      currentSortField = field
-      currentSortDirection = direction
-
-      const sortedOrders = sortData(orders, field, direction)
-      renderOrdersTableWithData(sortedOrders)
-    })
+      const sortedOrders = sortData(orders, field, direction);
+      renderOrdersTableWithData(sortedOrders);
+    });
+  }
 
   // Sắp xếp khách hàng
-  document
-    .querySelector('#customers-page .form-select[style*="max-width: 200px"]:last-child')
-    .addEventListener("change", function () {
-      const sortOption = this.value
-      let field = "id"
-      let direction = "asc"
+  const customersSortDropdown = document.querySelector('#customers-sort-dropdown');
+  if (customersSortDropdown) {
+    customersSortDropdown.addEventListener('change', function () {
+      const sortOption = this.value.split('-'); // Tách field và direction
+      const field = sortOption[0];
+      const direction = sortOption[1];
 
-      if (sortOption === "Sắp xếp: Mới Nhất") {
-        field = "id"
-        direction = "desc"
-      } else if (sortOption === "Sắp xếp: Chi Tiêu (Cao-Thấp)") {
-        field = "spent"
-        direction = "desc"
-      } else if (sortOption === "Sắp xếp: Đơn Hàng (Cao-Thấp)") {
-        field = "orders"
-        direction = "desc"
-      } else if (sortOption === "Sắp xếp: Tên (A-Z)") {
-        field = "name"
-        direction = "asc"
-      }
+      currentSortField = field;
+      currentSortDirection = direction;
 
-      currentSortField = field
-      currentSortDirection = direction
-
-      const sortedCustomers = sortData(customers, field, direction)
-      renderCustomersTableWithData(sortedCustomers)
-    })
+      const sortedCustomers = sortData(customers, field, direction);
+      renderCustomersTableWithData(sortedCustomers);
+    });
+  }
 }
 
 // DOM Elements
@@ -403,9 +356,12 @@ const customerDetailBadge = document.getElementById("customer-detail-badge")
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
   // Show login page by default
-  loginPage.classList.remove("d-none")
-  dashboardContainer.classList.add("d-none")
+  loginPage.classList.add("d-none");
+  dashboardContainer.classList.remove("d-none");
+  // loginPage.classList.remove("d-none")
+  // dashboardContainer.classList.add("d-none")
 
+  setupSortingEvents()
   // Render tables
   renderProductsTable()
   renderOrdersTable()
@@ -418,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCreateOrderForm()
 
   // Setup sorting events
-  setupSortingEvents()
+ 
 })
 
 // Login form submission
@@ -492,22 +448,40 @@ function updateOrderStats() {
   }
 }
 
+//function for status in table products
+function getStatusClass(status) {
+  switch (status) {
+    case "Còn Hàng":
+      return "bg-success";
+    case "Sắp Hết":
+      return "bg-warning text-dark";
+    case "Hết Hàng":
+      return "bg-danger";
+    default:
+      return "bg-secondary";
+  }
+}
+
+//add global variable
+const itemsPerPage = 10;
+let currentPage = 1
+
 // Products functions
-function renderProductsTableWithData(productsData) {
+function renderProductsTableWithData(productsData, itemsPerPage, currentPage) {
+  //fix entire function renderProductsTableWithData
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = products.slice(startIndex, endIndex);
+  //const productsTableBody = document.getElementById('products-table-body');
+  
   productsTableBody.innerHTML = ""
 
-  productsData.forEach((product) => {
-    const tr = document.createElement("tr")
-
-    const statusClass =
-      product.status === "Còn Hàng" ? "bg-success" : product.status === "Sắp Hết" ? "bg-warning text-dark" : "bg-danger"
-
-    tr.innerHTML = `
+  currentProducts.forEach((product) => {
+    const row = document.createElement("tr")
+    row.innerHTML = `
       <td>
         <div class="d-flex align-items-center">
-          <div class="product-icon">
-            <i class="bi bi-cake2"></i>
-          </div>
+          <img src="${product.image}" alt="${product.name}" class="product-image me-2" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
           <div>
             <div class="fw-medium">${product.name}</div>
             <div class="small text-muted">Mã: SP-${product.id.toString().padStart(3, "0")}</div>
@@ -517,34 +491,71 @@ function renderProductsTableWithData(productsData) {
       <td>${product.category}</td>
       <td>${product.price}</td>
       <td>${product.stock}</td>
-      <td><span class="badge ${statusClass}">${product.status}</span></td>
+      <td><span class="badge ${getStatusClass(product.status)}">${product.status}</span></td>
       <td class="text-end">
         <button class="btn btn-sm btn-primary me-1 edit-product" data-id="${product.id}">Sửa</button>
         <button class="btn btn-sm btn-danger delete-product" data-id="${product.id}">Xóa</button>
       </td>
-    `
+    `;
+    productsTableBody.appendChild(row);
+  });
+  //add info
+  const productTableFooter = document.querySelector(".card-footer");
+  productTableFooter.querySelector("#start-index").textContent = startIndex + 1;
+  productTableFooter.querySelector("#end-index").textContent = Math.min(endIndex, productsData.length);
+  productTableFooter.querySelector("#total-products").textContent = productsData.length;
+  
+  //add current-page-number
+  // document.querySelector(".current-page").textContent = currentPage;
+  const currentPageElement = document.getElementById("current-page");
+  currentPageElement.textContent = currentPage;
 
-    productsTableBody.appendChild(tr)
-  })
+  //disable button if they need
+  document.getElementById("prev-page").classList.toggle("disabled", currentPage === 1);
+  document.getElementById("next-page").classList.toggle("disabled", currentPage === Math.ceil(productsData.length / itemsPerPage));
 
   // Add event listeners to edit and delete buttons
   document.querySelectorAll(".edit-product").forEach((btn) => {
     btn.addEventListener("click", function () {
-      const id = Number.parseInt(this.getAttribute("data-id"))
-      editProduct(id)
-    })
-  })
+      const id = Number.parseInt(this.getAttribute("data-id"));
+      editProduct(id);
+    });
+  });
 
   document.querySelectorAll(".delete-product").forEach((btn) => {
     btn.addEventListener("click", function () {
-      const id = Number.parseInt(this.getAttribute("data-id"))
-      deleteProduct(id)
-    })
-  })
-}
+      const id = Number.parseInt(this.getAttribute("data-id"));
+      deleteProduct(id);
+    });
+  });
+};
+
 
 function renderProductsTable() {
-  renderProductsTableWithData(products)
+  // fix entire function renderProductsTable
+  const updateTable = () => {
+    renderProductsTableWithData(products, itemsPerPage, currentPage);
+  }
+  
+  //event for button prev-page
+  document.getElementById("prev-page").addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      updateTable();
+    }
+  });
+
+  //event for button next-page
+  document.getElementById("next-page").addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage < Math.ceil(products.length / itemsPerPage)) {
+      currentPage++;
+      updateTable();
+    }
+  });
+  
+  updateTable();
 }
 
 addProductBtn.addEventListener("click", () => {
@@ -1216,23 +1227,33 @@ function viewCustomer(id) {
 }
 
 document.getElementById('theme-toggle-btn').addEventListener('click', function() {
-  document.body.classList.toggle('dark-mode');
+  const body = document.body;
   const icon = this.querySelector('i');
-  
-  if (document.body.classList.contains('dark-mode')) {
+
+  // Chuyển đổi chế độ
+  body.classList.toggle('dark-mode');
+
+  // Cập nhật biểu tượng và lưu trạng thái vào localStorage
+  if (body.classList.contains('dark-mode')) {
     icon.classList.replace('bi-moon-stars', 'bi-sun');
-    localStorage.setItem('darkMode', 'enabled');
+    localStorage.setItem('theme', 'dark');
   } else {
     icon.classList.replace('bi-sun', 'bi-moon-stars');
-    localStorage.setItem('darkMode', 'disabled');
+    localStorage.setItem('theme', 'light');
   }
 });
 
 // Check saved theme on page load
 document.addEventListener('DOMContentLoaded', function() {
-  if (localStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark-mode');
-    document.querySelector('#theme-toggle-btn i').classList.replace('bi-moon-stars', 'bi-sun');
+  const body = document.body;
+  const icon = document.querySelector('#theme-toggle-btn i');
+
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+    icon.classList.replace('bi-moon-stars', 'bi-sun');
+  } else {
+    body.classList.remove('dark-mode');
+    icon.classList.replace('bi-sun', 'bi-moon-stars');
   }
 });
 
