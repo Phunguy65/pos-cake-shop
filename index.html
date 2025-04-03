@@ -6,7 +6,7 @@
   <div class="sidebar-header">
     <h3>Quản Lý Tiệm Bánh</h3>
     <div class="theme-toggle ms-2">
-      <button id="theme-toggle-btn" class="btn btn-sm">
+      <button id="theme-toggle-btn" class="btn btn-outline-secondary">
         <i class="bi bi-moon-stars"></i>
       </button>
     </div>
@@ -105,7 +105,10 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" data-page="products">
-            <i class="bi bi-cake2"></i> Sản Phẩm
+            <!-- svg for cake icon because class bi bi-cake2 is not working -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cake" viewBox="0 0 16 16">
+              <path d="m7.994.013-.595.79a.747.747 0 0 0 .101 1.01V4H5a2 2 0 0 0-2 2v3H2a2 2 0 0 0-2 2v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a2 2 0 0 0-2-2h-1V6a2 2 0 0 0-2-2H8.5V1.806A.747.747 0 0 0 8.592.802zM4 6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v.414a.9.9 0 0 1-.646-.268 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0A.9.9 0 0 1 4 6.414zm0 1.414c.49 0 .98-.187 1.354-.56a.914.914 0 0 1 1.292 0c.748.747 1.96.747 2.708 0a.914.914 0 0 1 1.292 0c.374.373.864.56 1.354.56V9H4zM1 11a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.793l-.354.354a.914.914 0 0 1-1.293 0 1.914 1.914 0 0 0-2.707 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0L1 11.793zm11.646 1.854a1.915 1.915 0 0 0 2.354.279V15H1v-1.867c.737.452 1.715.36 2.354-.28a.914.914 0 0 1 1.292 0c.748.748 1.96.748 2.708 0a.914.914 0 0 1 1.292 0c.748.748 1.96.748 2.707 0a.914.914 0 0 1 1.293 0Z"/>
+            </svg> Sản Phẩm
           </a>
         </li>
         <li class="nav-item">
@@ -309,7 +312,7 @@
                     <div class="popular-products">
                       <div class="product-item d-flex align-items-center mb-3">
                         <div class="product-icon">
-                          <i class="bi bi-cake2"></i>
+                          <img src="images/kemsocola.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                         </div>
                         <div class="product-info flex-grow-1">
                           <h6 class="mb-0">Bánh Kem Socola</h6>
@@ -319,7 +322,7 @@
                       </div>
                       <div class="product-item d-flex align-items-center mb-3">
                         <div class="product-icon">
-                          <i class="bi bi-cake2"></i>
+                          <img src="images/kemsocola.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                         </div>
                         <div class="product-info flex-grow-1">
                           <h6 class="mb-0">Bánh Cupcake Vanilla</h6>
@@ -329,7 +332,7 @@
                       </div>
                       <div class="product-item d-flex align-items-center mb-3">
                         <div class="product-icon">
-                          <i class="bi bi-cake2"></i>
+                          <img src="images/kemsocola.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                         </div>
                         <div class="product-info flex-grow-1">
                           <h6 class="mb-0">Bánh Tiramisu</h6>
@@ -339,7 +342,7 @@
                       </div>
                       <div class="product-item d-flex align-items-center">
                         <div class="product-icon">
-                          <i class="bi bi-cake2"></i>
+                          <img src="images/kemsocola.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                         </div>
                         <div class="product-info flex-grow-1">
                           <h6 class="mb-0">Bánh Croissant</h6>
@@ -470,18 +473,20 @@
                     </div>
                   </div>
                   <div class="col-md-8 d-flex justify-content-md-end">
-                    <select class="form-select me-2" style="max-width: 200px;">
-                      <option>Tất Cả Danh Mục</option>
-                      <option>Bánh Kem</option>
-                      <option>Bánh Ngọt</option>
-                      <option>Bánh Mì</option>
-                      <option>Cookies</option>
+                    <select id="category-filter-dropdown" class="form-select me-2" style="max-width: 200px;" title="Lọc theo danh mục">
+                      <option value="all">Tất Cả Danh Mục</option>
+                      <option value="Bánh Kem">Bánh Kem</option>
+                      <option value="Bánh Ngọt">Bánh Ngọt</option>
+                      <option value="Bánh Mì">Bánh Mì</option>
+                      <option value="Cookies">Cookies</option>
                     </select>
-                    <select class="form-select" style="max-width: 200px;">
-                      <option>Sắp xếp: Tên</option>
-                      <option>Sắp xếp: Giá (Thấp đến Cao)</option>
-                      <option>Sắp xếp: Giá (Cao đến Thấp)</option>
-                      <option>Sắp xếp: Tồn Kho</option>
+                    <select id="products-sort-dropdown" class="form-select" style="max-width: 200px;" title="Sắp xếp sản phẩm">
+                      <option value="name-asc">Sắp xếp: Tên (A-Z)</option>
+                      <option value="name-desc">Sắp xếp: Tên (Z-A)</option>
+                      <option value="price-asc">Sắp xếp: Giá (Thấp đến Cao)</option>
+                      <option value="price-desc">Sắp xếp: Giá (Cao đến Thấp)</option>
+                      <option value="stock-asc">Sắp xếp: Tồn Kho (Thấp đến Cao)</option>
+                      <option value="stock-desc">Sắp xếp: Tồn Kho (Cao đến Thấp)</option>
                     </select>
                   </div>
                 </div>
@@ -507,12 +512,12 @@
               </div>
               <div class="card-footer">
                 <div class="d-flex justify-content-between align-items-center">
-                  <div>Hiển thị <span class="fw-bold">1</span> đến <span class="fw-bold">8</span> của <span class="fw-bold">8</span> kết quả</div>
+                  <div>Hiển thị <span class="fw-bold" id="start-index">1</span> đến <span class="fw-bold" id="end-index">10</span> của <span class="fw-bold" id="total-products">0</span> kết quả</div>
                   <nav>
                     <ul class="pagination mb-0">
-                      <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+                      <li class="page-item" id="prev-page"><a class="page-link" href="#">Trước</a></li>
+                      <li class="page-item"><a class="page-link" id="current-page"></a></li>
+                      <li class="page-item" id="next-page"><a class="page-link" href="#">Sau</a></li>
                     </ul>
                   </nav>
                 </div>
@@ -1400,9 +1405,10 @@
                             <td>
                               <div class="d-flex align-items-center">
                                 <div class="product-icon me-2">
-                                  <i class="bi bi-cake2"></i>
+                                  <img src="images/kemsocola.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                                 </div>
-                                <div>Bánh Kem Socola</div>
+                                <div>
+                                  Bánh Kem Socola</div>
                               </div>
                             </td>
                             <td>542</td>
@@ -1413,7 +1419,7 @@
                             <td>
                               <div class="d-flex align-items-center">
                                 <div class="product-icon me-2">
-                                  <i class="bi bi-cake2"></i>
+                                  <img src="images/cupcakevanilla.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                                 </div>
                                 <div>Bánh Cupcake Vanilla</div>
                               </div>
@@ -1426,7 +1432,7 @@
                             <td>
                               <div class="d-flex align-items-center">
                                 <div class="product-icon me-2">
-                                  <i class="bi bi-cake2"></i>
+                                  <img src="images/tiramisu.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                                 </div>
                                 <div>Bánh Tiramisu</div>
                               </div>
@@ -1439,7 +1445,7 @@
                             <td>
                               <div class="d-flex align-items-center">
                                 <div class="product-icon me-2">
-                                  <i class="bi bi-cake2"></i>
+                                  <img src="images/Croissant.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                                 </div>
                                 <div>Bánh Croissant</div>
                               </div>
@@ -1452,7 +1458,7 @@
                             <td>
                               <div class="d-flex align-items-center">
                                 <div class="product-icon me-2">
-                                  <i class="bi bi-cake2"></i>
+                                  <img src="images/cookiessocola.jpg" alt="Bánh Kem Socola" class="product-image" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;">
                                 </div>
                                 <div>Cookies Socola</div>
                               </div>
