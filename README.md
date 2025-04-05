@@ -16,9 +16,11 @@ BÀI TẬP NHÓM
 >
 > **Giảng viên hướng dẫn** : Nguyễn Văn Hữu Hoàng
 >
-> **Sinh viên thực hiện** : Phạm Hùng Thiên - N22DCCN180
-
-Nguyễn Ngọc Phú - N22DCCN159
+> **Sinh viên thực hiện** :
+> 
+> Phạm Hùng Thiên - N22DCCN180 
+> 
+> Nguyễn Ngọc Phú - N22DCCN159
 
 ***<u>TP.Hồ Chí Minh, tháng 04 năm 2025</u>***
 
